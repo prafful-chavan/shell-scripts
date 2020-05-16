@@ -1,5 +1,5 @@
 #===============================================================================================
-#This is tomcat installation scripts which is we can install and configure on RHEL Servers
+#This is tomcat installation scripts which is we can install and configure on RHEL/centos Servers
 #powered by- Prafful Chavan
 #===============================================================================================
 #!/bin/bash
