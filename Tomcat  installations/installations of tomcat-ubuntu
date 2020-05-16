@@ -1,0 +1,23 @@
+#!/bin/bash
+sudo apt-get update -y 
+sudo apt-get install default-jre -y
+cd /opt
+sudo wget http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.54/bin/apache-tomcat-8.5.54.tar.gz
+tar -xvzf apache-tomcat-8.5.54.tar.gz
+chmod +x /opt/apache-tomcat-8.5.54/bin/startup.sh
+chmod +x /opt/apache-tomcat-8.5.54/bin/shutdown.sh
+sed -i '19d' /opt/apache-tomcat-8.5.54/webapps/manager/META-INF/context.xml #line number 19 will delete from 
+sed -i '20d' /opt/apache-tomcat-8.5.54/webapps/manager/META-INF/context.xml #line number 20 will delete from i/p file
+sed -i '44d' /opt/apache-tomcat-8.5.54/conf/tomcat-users.xml   #Line no 44 will delete from the input file
+cat << EOF >> /opt/apache-tomcat-8.5.54/conf/tomcat-users.xml
+        <role rolename="manager-gui"/>
+        <role rolename="manager-script"/>
+        <role rolename="manager-jmx"/>
+        <role rolename="manager-status"/>
+        <user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+        <user username="deployer" password="deployer" roles="manager-script"/>
+        <user username="tomcat" password="s3cret" roles="manager-gui"/>
+</tomcat-users>
+EOF   
+cd /opt/apache-tomcat-8.5.54/bin/
+sh startup.sh

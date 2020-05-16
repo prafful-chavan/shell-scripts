@@ -1,0 +1,27 @@
+#=================================================================
+#In this script we are installtion ansible on rhel 8 AWS instance
+#powered by- Prafful Chavan
+#==================================================================
+
+#!/bin/bash  
+dnf -y install python3-pip
+sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf install --enablerepo epel-playground ansible -y
+useradd ansible
+echo 'ansible:123' | chpasswd
+echo "ansible ALL=(ALL) ALL" >> /etc/sudoers
+sed -ie 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+service sshd restart
+-------------------------------
+
+#This is second part of script you have to run by manually on terminal
+
+#switch user to ansible 
+#su ansible
+
+#Then, generate keygen and copy ssh id with the host public id.
+
+#echo -e "\n"|ssh-keygen -t rsa -N ""
+#ssh-copy-id <target public ip add>
+
+#=================================================================
